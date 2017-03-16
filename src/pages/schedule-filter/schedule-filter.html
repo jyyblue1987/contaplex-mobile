@@ -1,0 +1,58 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons start>
+      <button ion-button (click)="dismiss()">Volver</button>
+    </ion-buttons>
+
+    <ion-title>
+      Buscar Movimientos
+    </ion-title>
+
+    <!--
+    <ion-buttons end>
+      <button ion-button (click)="applyFilters()" strong>Buscar</button>
+    </ion-buttons>
+    -->
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="outer-content">
+
+  <ion-list radio-group [(ngModel)]="criterioMovimientos">
+    <ion-list-header>Movimientos</ion-list-header>
+
+    <ion-item>
+      <ion-label>Más recientes</ion-label>
+      <ion-radio name="criterioMovimientos" value="recientes"></ion-radio>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Esta semana</ion-label>
+      <ion-radio name="criterioMovimientos" value="esta_semana"></ion-radio>
+    </ion-item>
+    
+    <ion-item>
+      <ion-label>Mes en curso</ion-label>
+      <ion-radio name="criterioMovimientos" value="mes_actual"></ion-radio>
+    </ion-item>
+    
+    <ion-item>
+      <ion-label>Mes previo</ion-label>
+      <ion-radio name="criterioMovimientos" value="mes_previo"></ion-radio>
+    </ion-item>
+    
+    <ion-item>
+      <ion-label>Ir a fecha...</ion-label>
+      <ion-radio name="criterioMovimientos" value="fecha"></ion-radio>
+    </ion-item>
+    
+  </ion-list>
+  
+  <div style="padding-left: 5px; padding-right: 5px;">
+    <button ion-button icon-left full (click)="applyFilters()">
+      <ion-icon name="search"></ion-icon>
+      Buscar
+    </button>
+  </div>
+  
+</ion-content>

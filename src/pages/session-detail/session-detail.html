@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Detalle del movimiento</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <h1 [color]="movimiento.importe < 0 ? 'danger' : 'primary'" style="font-weight: bold; text-align: center">{{ getImporteConFormato(movimiento.importe) }}</h1>
+
+  <h3 style="text-align: center">{{ movimiento.tipomovimiento }} {{ movimiento.concepto }}</h3>
+  
+  <p style="text-align: center" *ngIf="movimiento.extra">{{ movimiento.extra }}</p>
+  
+  <ion-list>
+  
+    <ion-item>
+    
+      <p>Empresa</p>
+      <p item-right color="dark">{{ cuenta.empresa }}</p>
+    
+    </ion-item>
+
+    <ion-item>
+    
+      <p>Cuenta</p>
+      <p item-right color="dark">{{ cuenta.nrocuenta }} {{ cuenta.nombrecuenta }}</p>
+    
+    </ion-item>
+  
+    <ion-item>
+    
+      <p>Fecha</p>
+      <p item-right color="dark">{{ movimiento.fecha | date:'dd-MM-yyyy' }}</p>
+    
+    </ion-item>
+
+    <ion-item>
+    
+      <p>Importe</p>
+      <p item-right color="dark">{{ getImporteConFormato(movimiento.importe) }}</p>
+    
+    </ion-item>
+  
+  </ion-list>
+  
+</ion-content>
