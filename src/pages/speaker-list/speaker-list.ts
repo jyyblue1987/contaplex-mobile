@@ -6,6 +6,7 @@ import { InAppBrowser } from 'ionic-native';
 import { ConferenceData } from '../../providers/conference-data';
 import { CuentaData } from '../../providers/cuentas-data';
 import { SessionDetailPage } from '../session-detail/session-detail';
+import { AgregarCuentaPage } from '../agregar-cuenta/agregar-cuenta';
 import { SpeakerDetailPage } from '../speaker-detail/speaker-detail';
 import { UserData } from '../../providers/user-data';
 
@@ -19,6 +20,7 @@ export class SpeakerListPage {
   actionSheet: ActionSheet;
   speakers: any[] = [];
   cuentas: any[] = [];
+  hasLoaded: boolean = false;
 
   constructor(
     public actionSheetCtrl: ActionSheetController,
@@ -40,6 +42,7 @@ export class SpeakerListPage {
 	this.user.getUsuarioId().then((usuarioId) => {
 	    this.cuentasData.load(usuarioId).subscribe((cuentas: any[]) => {
 	      this.cuentas = cuentas;
+	      this.hasLoaded = true;
 	    });
 	});
 
@@ -57,6 +60,10 @@ export class SpeakerListPage {
 
   goToSpeakerDetail(speakerName: any) {
     this.navCtrl.push(SpeakerDetailPage, speakerName);
+  }
+
+  goToAgregarCuenta() {
+    this.navCtrl.push(AgregarCuentaPage);
   }
 
   goToSpeakerTwitter(speaker: any) {

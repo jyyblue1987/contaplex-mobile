@@ -37,17 +37,13 @@ export class UserData {
     }
   };
 
-  login(username: string): any {
-    console.log("SI, DISPARA EL LOGIN");
-    //return this.http.get('http://ec2-34-192-160-14.compute-1.amazonaws.com:10081/api/login')
-    return this.http.post('http://ec2-34-192-160-14.compute-1.amazonaws.com:10081/api/login', JSON.stringify({user: username, password: 'luis123'}), { headers: this.headers })
+  login(username: string, password: string): any {
+    return this.http.post('http://localhost:8080/api/login', JSON.stringify({user: username, password: password}), { headers: this.headers })
         .map(this.processLoginResponse, this);
   };
   
   processLoginResponse(data: any) {
-    console.log("processData usuario login llamado");
     this._loginResponse = data.json();
-    console.log(data);
     this.storage.set(this.HAS_LOGGED_IN, true);
     this.setUsername('Luis Luporini');
     this.setUsuarioId(this._loginResponse.usuarioId);
@@ -56,10 +52,13 @@ export class UserData {
     return true;
   };
 
-  signup(username: string): void {
-    this.storage.set(this.HAS_LOGGED_IN, true);
+  signup(data: any): any {
+    /*this.storage.set(this.HAS_LOGGED_IN, true);
     this.setUsername(username);
-    this.events.publish('user:signup');
+    this.events.publish('user:signup');*/
+    
+    return this.http.post('http://localhost:8080/api/signup', JSON.stringify({user: data.email, password: data.password, name: data.name}), { headers: this.headers })
+        .map(this.processLoginResponse, this);    
   };
 
   logout(): void {

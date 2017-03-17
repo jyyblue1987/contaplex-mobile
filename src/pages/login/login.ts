@@ -22,8 +22,7 @@ export class LoginPage {
     this.submitted = true;
 
     if (form.valid) {
-      this.userData.login(this.login.username).subscribe((loginSuccess: boolean) => {
-	console.log("despues");
+      this.userData.login(this.login.username, this.login.password).subscribe((loginSuccess: boolean) => {
 	if (loginSuccess) {
 	  this.navCtrl.push(TabsPage);
 	} else {

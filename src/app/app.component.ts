@@ -13,6 +13,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { TutorialPage } from '../pages/tutorial/tutorial';
 import { SchedulePage } from '../pages/schedule/schedule';
 import { SpeakerListPage } from '../pages/speaker-list/speaker-list';
+import { CuentaEmpresaPage } from '../pages/cuenta-empresa/cuenta-empresa';
 import { SupportPage } from '../pages/support/support';
 
 import { ConferenceData } from '../providers/conference-data';
@@ -40,20 +41,16 @@ export class ConferenceApp {
   // the left menu only works after login
   // the login page disables the left menu
   appPages: PageInterface[] = [
-    /*{ title: 'Movimientos', component: TabsPage, tabComponent: SchedulePage, icon: 'calendar' },*/
-    { title: 'Cuentas', component: TabsPage, tabComponent: SpeakerListPage, icon: 'sync' }/*,*/
-    /*{ title: 'Map', component: TabsPage, tabComponent: MapPage, index: 1, icon: 'map' },
-    { title: 'About', component: TabsPage, tabComponent: AboutPage, index: 2, icon: 'information-circle' }*/
+    { title: 'Mis Cuentas', component: TabsPage, tabComponent: SpeakerListPage, icon: 'sync' },
+    { title: 'Mi Empresa', component: TabsPage, tabComponent: CuentaEmpresaPage, icon: 'contacts' }
   ];
   loggedInPages: PageInterface[] = [
     { title: 'Perfil', component: AccountPage, icon: 'person' },
-    /*{ title: 'Support', component: SupportPage, icon: 'help' },*/
     { title: 'Salir', component: LoginPage, icon: 'log-out', logsOut: true }
   ];
   loggedOutPages: PageInterface[] = [
     { title: 'Ingresar', component: LoginPage, icon: 'log-in' },
-    /*{ title: 'Soporte', component: SupportPage, icon: 'help' },*/
-    /*{ title: 'Signup', component: SignupPage, icon: 'person-add' }*/
+    { title: 'Registrarse', component: SignupPage, icon: 'person-add' }
   ];
   rootPage: any;
 

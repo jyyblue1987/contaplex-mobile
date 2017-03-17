@@ -3,14 +3,14 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Cuentas</ion-title>
+    <ion-title>Mis Cuentas</ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content class="outer-content speaker-list">
   
  
-  <ion-list>
+  <ion-list [hidden]="cuentas.length === 0">
 
     <button *ngFor="let cuenta of cuentas" ion-item (click)="goToSchedule(cuenta)">
       <ion-icon [color]="cuenta.saldo < 0 ? 'danger' : 'primary'" name="sync" item-left></ion-icon>
@@ -20,5 +20,18 @@
     </button>
  
   </ion-list>
+  
+  <div [hidden]="!hasLoaded || cuentas.length > 0">
+    
+    <p>No hay cuentas</p>
+    
+    <div style="padding-left: 5px; padding-right: 5px;">
+	<button ion-button icon-left full (click)="goToAgregarCuenta()">
+	  <ion-icon name="sync"></ion-icon>
+	  Agregar Cuenta
+	</button>
+    </div>
+    
+  </div>
 
 </ion-content>

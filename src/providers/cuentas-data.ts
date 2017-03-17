@@ -11,94 +11,53 @@ import 'rxjs/add/observable/of';
 
 @Injectable()
 export class CuentaData {
+  
   data: any;
+  lastUsuarioId: string;
+  dataType: any;
 
   constructor(public http: Http, public user: UserData) { }
 
-  load(usuarioId: string): any {
-    if (this.data) {
+  getUrlBase(): string {
+    return "http://localhost:8080/api";
+  }
+  
+  loadMiEmpresa(usuarioId: string, queryText = ''): any {
+    return this.load(usuarioId, queryText);
+  }
+  
+  load(usuarioId: string, dataType = "mis-cuentas"): any {
+    if (this.data && this.lastUsuarioId == usuarioId && this.dataType == dataType) {
       return Observable.of(this.data);
     } else {
-      return this.reload(usuarioId);
+      if (dataType == 'mis-cuentas') {
+	return this.getMisCuentas(usuarioId);
+      } else {
+	return this.getMiEmpresa(usuarioId, dataType);
+      }
     }
   }
 
-  reload(usuarioId: string): any {
-      return this.http.get('http://ec2-34-192-160-14.compute-1.amazonaws.com:10081/api/cuenta/listar?usuarioId=' + usuarioId)
+  getMiEmpresa(usuarioId: string, queryText: string): any {
+      this.lastUsuarioId = usuarioId;
+      this.dataType = 'mi-empresa';
+      return this.http.get(`${this.getUrlBase()}/empresa/listarCuentas?usuarioId=${usuarioId}&term=${queryText}`)
+        .map(this.processData, this);
+  }
+  
+  getMisCuentas(usuarioId: string): any {
+      this.lastUsuarioId = usuarioId;
+      this.dataType = 'mis-cuentas';
+      return this.http.get(`${this.getUrlBase()}//cuenta/listar?usuarioId=${usuarioId}`)
         .map(this.processData, this);
   }
 
   processData(data: any) {
-    // just some good 'ol JS fun with objects and arrays
-    // build up the data by linking speakers to sessions
-    console.log("processData llamado");
     this.data = data.json();
-    console.log(this.data);
-    /*
-    this.data.tracks = [];
-
-    // loop through each day in the schedule
-    this.data.schedule.forEach((day: any) => {
-      // loop through each timeline group in the day
-      day.groups.forEach((group: any) => {
-        // loop through each session in the timeline group
-        group.sessions.forEach((session: any) => {
-          session.speakers = [];
-          if (session.speakerNames) {
-            session.speakerNames.forEach((speakerName: any) => {
-              let speaker = this.data.speakers.find((s: any) => s.name === speakerName);
-              if (speaker) {
-                session.speakers.push(speaker);
-                speaker.sessions = speaker.sessions || [];
-                speaker.sessions.push(session);
-              }
-            });
-          }
-
-          if (session.tracks) {
-            session.tracks.forEach((track: any) => {
-              if (this.data.tracks.indexOf(track) < 0) {
-                this.data.tracks.push(track);
-              }
-            });
-          }
-        });
-      });
-    });
-    */
-
     return this.data;
   }
 
   /*
-  getTimeline(dayIndex: number, queryText = '', excludeTracks: any[] = [], segment = 'all') {
-    return this.load().map((data: any) => {
-      let day = data.schedule[dayIndex];
-      day.shownSessions = 0;
-
-      queryText = queryText.toLowerCase().replace(/,|\.|-/g, ' ');
-      let queryWords = queryText.split(' ').filter(w => !!w.trim().length);
-
-      day.groups.forEach((group: any) => {
-        group.hide = true;
-
-        group.sessions.forEach((session: any) => {
-          // check if this session should show or not
-          this.filterSession(session, queryWords, excludeTracks, segment);
-
-          if (!session.hide) {
-            // if this session is not hidden then this group should show
-            group.hide = false;
-            day.shownSessions++;
-          }
-        });
-
-      });
-
-      return day;
-    });
-  }
-
   filterSession(session: any, queryWords: string[], excludeTracks: any[], segment: string) {
 
     let matchesQueryText = false;
@@ -138,26 +97,5 @@ export class CuentaData {
     session.hide = !(matchesQueryText && matchesTracks && matchesSegment);
   }
 
-  getSpeakers() {
-    return this.load().map((data: any) => {
-      return data.speakers.sort((a: any, b: any) => {
-        let aName = a.name.split(' ').pop();
-        let bName = b.name.split(' ').pop();
-        return aName.localeCompare(bName);
-      });
-    });
-  }
-
-  getTracks() {
-    return this.load().map((data: any) => {
-      return data.tracks.sort();
-    });
-  }
-
-  getMap() {
-    return this.load().map((data: any) => {
-      return data.map;
-    });
-  }
   */
 }
