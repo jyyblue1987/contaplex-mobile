@@ -1,0 +1,74 @@
+<ion-header>
+	<ion-navbar>
+		<button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+		<ion-title>Agregar Cuenta</ion-title>
+	</ion-navbar>
+</ion-header>
+
+<ion-content class="login-page">
+
+	<div class="logo">
+		<img src="assets/img/appicon.svg" alt="Ionic Logo">
+	</div>
+
+	<form #signupForm="ngForm" novalidate>
+		<ion-list no-lines>
+			<ion-item>
+				<ion-label stacked color="primary">Nombre</ion-label>
+				<ion-input [(ngModel)]="signup.name" name="text" type="name" #name="ngModel" required>
+				</ion-input>
+			</ion-item>
+
+			<p ion-text [hidden]="name.valid || submitted == false" color="danger" padding-left>
+				Por favor, ingrese su nombre
+			</p>
+
+			<ion-item>
+				<ion-label stacked color="primary">E-mail</ion-label>
+				<ion-input [(ngModel)]="signup.email" name="email" type="email" #email="ngModel" required>
+				</ion-input>
+			</ion-item>
+
+			<p ion-text [hidden]="email.valid || submitted == false" color="danger" padding-left>
+				Por favor, ingrese su E-mail
+			</p>
+
+			<ion-item>
+				<ion-label stacked color="primary">Confirmar E-Mail</ion-label>
+				<ion-input [(ngModel)]="signup.email2" name="email2" type="email" #email2="ngModel" required>
+				</ion-input>
+			</ion-item>
+
+			<p ion-text [hidden]="email2.valid || submitted == false" color="danger" padding-left>
+				Por favor, confirme su E-mail
+			</p>
+
+			<ion-item>
+				<ion-label stacked color="primary">Contraseña</ion-label>
+				<ion-input [(ngModel)]="signup.password" name="password" type="password" #password="ngModel" required>
+				</ion-input>
+			</ion-item>
+			<p ion-text [hidden]="password.valid || submitted == false" color="danger" padding-left>
+				Por favor, ingrese una contraseña
+			</p>
+
+			<ion-item>
+				<ion-label stacked color="primary">Confirmar Contraseña</ion-label>
+				<ion-input [(ngModel)]="signup.password2" name="password2" type="password" #password2="ngModel" required>
+				</ion-input>
+			</ion-item>
+			
+			<p ion-text [hidden]="password2.valid || submitted == false" color="danger" padding-left>
+				Por favor, confirme la contraseña
+			</p>
+
+		</ion-list>
+
+		<div padding>
+			<button ion-button (click)="onSignup(signupForm)" type="submit" block>Agregar</button>
+		</div>
+	</form>
+
+</ion-content>

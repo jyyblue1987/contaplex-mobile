@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Mi Empresa</ion-title>
+  </ion-navbar>
+  
+  <ion-toolbar no-border-top>
+    <ion-searchbar color="primary"
+                   [(ngModel)]="queryText"
+                   (ionInput)="buscar()"
+                   placeholder="Buscar cuentas">
+    </ion-searchbar>
+  </ion-toolbar>
+  
+</ion-header>
+
+<ion-content class="outer-content speaker-list">
+  
+ 
+  <ion-list>
+
+    <button *ngFor="let cuenta of cuentas" ion-item (click)="goToSchedule(cuenta)">
+      <ion-icon [color]="cuenta.saldo < 0 ? 'danger' : 'primary'" name="sync" item-left></ion-icon>
+      <h2> {{ cuenta.nombrecuenta }}</h2>
+      <p>{{ cuenta.nrocuenta }}</p>
+      <p [color]="cuenta.saldo < 0 ? 'danger' : 'primary'" item-right>{{ getImporteConFormato(cuenta.saldo) }}</p>
+    </button>
+ 
+  </ion-list>
+
+</ion-content>
