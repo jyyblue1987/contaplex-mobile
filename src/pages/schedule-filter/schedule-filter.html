@@ -27,8 +27,8 @@
     </ion-item>
 
     <ion-item>
-      <ion-label>Esta semana</ion-label>
-      <ion-radio name="criterioMovimientos" value="esta_semana"></ion-radio>
+      <ion-label>Ultimos 7 días</ion-label>
+      <ion-radio name="criterioMovimientos" value="ultimos_7d"></ion-radio>
     </ion-item>
     
     <ion-item>
@@ -43,7 +43,8 @@
     
     <ion-item>
       <ion-label>Ir a fecha...</ion-label>
-      <ion-radio name="criterioMovimientos" value="fecha"></ion-radio>
+      <ion-radio name="criterioMovimientos" value="fecha-2017-01-07"></ion-radio>
+      <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="myDate"></ion-datetime>
     </ion-item>
     
   </ion-list>

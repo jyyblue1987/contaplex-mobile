@@ -138,6 +138,9 @@ export class ConferenceApp {
   }
 
   platformReady() {
+    if (cordova.platformId == 'android') {
+      StatusBar.backgroundColorByHexString("#fff");
+    }
     // Call any initial plugins when ready
     this.platform.ready().then(() => {
       Splashscreen.hide();

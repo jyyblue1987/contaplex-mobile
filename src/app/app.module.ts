@@ -26,6 +26,7 @@ import { ConferenceData } from '../providers/conference-data';
 import { MovimientoData } from '../providers/movimiento-data';
 import { CuentaData } from '../providers/cuentas-data';
 import { UserData } from '../providers/user-data';
+import { GlobalData } from '../providers/global-data';
 
 
 @NgModule({
@@ -72,6 +73,6 @@ import { UserData } from '../providers/user-data';
     TutorialPage,
     SupportPage
   ],
-  providers: [ConferenceData, CuentaData, MovimientoData, UserData]
+  providers: [ConferenceData, CuentaData, MovimientoData, UserData, GlobalData]
 })
 export class AppModule { }

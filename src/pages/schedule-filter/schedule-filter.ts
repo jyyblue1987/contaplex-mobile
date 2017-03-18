@@ -31,6 +31,7 @@ export class ScheduleFilterPage {
   dismiss(data?: any) {
     // using the injected ViewController this page
     // can "dismiss" itself and pass back data
+    console.log(data);
     this.viewCtrl.dismiss(data);
   }
 }

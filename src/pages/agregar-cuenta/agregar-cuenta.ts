@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
-import { NavController } from 'ionic-angular';
+import { NavController, AlertController } from 'ionic-angular';
 
 import { TabsPage } from '../tabs/tabs';
-import { UserData } from '../../providers/user-data';
+import { CuentaData } from '../../providers/cuentas-data';
 
 
 @Component({
@@ -12,22 +12,39 @@ import { UserData } from '../../providers/user-data';
   templateUrl: 'agregar-cuenta.html'
 })
 export class AgregarCuentaPage {
-  signup: {name?: string, email?: string, email2?: string, password?: string, password2?: string} = {};
+  agregarCuenta: { nombre?: string, razon_social?: string, documento?: string, empresa?: string, mensaje?: string } = {};
   submitted = false;
 
-  constructor(public navCtrl: NavController, public userData: UserData) {}
+  constructor(public navCtrl: NavController, public cuentaData: CuentaData, private alertCtrl: AlertController) {}
 
-  onSignup(form: NgForm) {
+  onSolicitar(form: NgForm) {
     this.submitted = true;
 
     if (form.valid) {
-      this.userData.signup(this.signup).subscribe((signupSuccess: boolean) => {
-	if (signupSuccess) {
-	  this.navCtrl.push(TabsPage);
+      this.cuentaData.solicitar(this.agregarCuenta).subscribe((responseSuccess: boolean) => {
+	if (responseSuccess) {
+	  this.presentAlert();
 	} else {
 	  // TODO
 	}
       });
     }
   }
+  
+  presentAlert() {
+    let alert = this.alertCtrl.create({
+      title: 'Solicitud de acceso a cuenta',
+      subTitle: 'Tu solicitud fue recibida correctamente. La empresa la revisará para procesarla.',
+      buttons: [{
+	text: 'Continuar',
+	handler: () => {
+	  alert.dismiss();
+	  this.navCtrl.push(TabsPage);
+	  return false;
+	}
+      }]
+    });
+    alert.present();
+  }
+  
 }

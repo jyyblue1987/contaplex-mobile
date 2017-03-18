@@ -31,7 +31,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-list>
+  <ion-list [hidden]="movimientosFiltrados.length === -1">
     <ion-item-group>
       <ion-item-divider color="light">Movimientos {{ getDescripcionCriterio() }}
       <ion-note color="dark" item-right>Saldo {{ getImporteConFormato(cuenta.saldo) }}</ion-note>
@@ -50,23 +50,13 @@
   </ion-list>
 
 
-  <!--ion-list #scheduleList [hidden]="shownSessions === 0">-->
+  <ion-card [hidden]="isLoading || movimientosFiltrados.length > 0">
 
-  <ion-list-header [hidden]="shownSessions > 0">
-      No Sessions Found
-  </ion-list-header>
+    <ion-card-header>
+	<p>No existen movimientos</p>
+    </ion-card-header>
 
-  <!--
-  <ion-fab bottom right #fab>
-    <button ion-fab><ion-icon name="share"></ion-icon></button>
-    <ion-fab-list side="top">
-      <button ion-fab color="vimeo" (click)="openSocial('Vimeo', fab)"><ion-icon name="logo-vimeo"></ion-icon></button>
-      <button ion-fab color="google" (click)="openSocial('Google+', fab)"><ion-icon name="logo-googleplus"></ion-icon></button>
-      <button ion-fab color="twitter" (click)="openSocial('Twitter', fab)"><ion-icon name="logo-twitter"></ion-icon></button>
-      <button ion-fab color="facebook" (click)="openSocial('Facebook', fab)"><ion-icon name="logo-facebook"></ion-icon></button>
-    </ion-fab-list>
-  </ion-fab>
-  -->
+  </ion-card>
 
-
+    
 </ion-content>

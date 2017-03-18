@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 
 import { UserData } from './user-data';
+import { GlobalData } from './global-data';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
@@ -16,11 +17,7 @@ export class CuentaData {
   lastUsuarioId: string;
   dataType: any;
 
-  constructor(public http: Http, public user: UserData) { }
-
-  getUrlBase(): string {
-    return "http://localhost:8080/api";
-  }
+  constructor(public http: Http, public user: UserData, private global: GlobalData) { }
   
   loadMiEmpresa(usuarioId: string, queryText = ''): any {
     return this.load(usuarioId, queryText);
@@ -41,14 +38,14 @@ export class CuentaData {
   getMiEmpresa(usuarioId: string, queryText: string): any {
       this.lastUsuarioId = usuarioId;
       this.dataType = 'mi-empresa';
-      return this.http.get(`${this.getUrlBase()}/empresa/listarCuentas?usuarioId=${usuarioId}&term=${queryText}`)
+      return this.http.get(`${this.global.getApiBaseUrl()}/empresa/listarCuentas?usuarioId=${usuarioId}&term=${queryText}`)
         .map(this.processData, this);
   }
   
   getMisCuentas(usuarioId: string): any {
       this.lastUsuarioId = usuarioId;
       this.dataType = 'mis-cuentas';
-      return this.http.get(`${this.getUrlBase()}//cuenta/listar?usuarioId=${usuarioId}`)
+      return this.http.get(`${this.global.getApiBaseUrl()}/cuenta/listar?usuarioId=${usuarioId}`)
         .map(this.processData, this);
   }
 
@@ -57,6 +54,19 @@ export class CuentaData {
     return this.data;
   }
 
+  solicitar(data: any): any {
+    /*
+    return this.http.post(`${this.global.getApiBaseUrl()/signup`, JSON.stringify(data), { headers: this.headers })
+        .map(this.processSolicitarResponse, this);
+    */
+    return Observable.of(this);
+  }
+
+  processSolicitarResponse(data: any) {
+    this.data = data.json();
+    return this.data;
+  }
+  
   /*
   filterSession(session: any, queryWords: string[], excludeTracks: any[], segment: string) {
 

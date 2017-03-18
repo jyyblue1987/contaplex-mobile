@@ -4,6 +4,7 @@ import { Events } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { Headers, Http } from '@angular/http';
 
+import { GlobalData } from './global-data';
 
 @Injectable()
 export class UserData {
@@ -17,7 +18,8 @@ export class UserData {
   constructor(
     public events: Events,
     public storage: Storage,
-    public http: Http
+    public http: Http,
+    private global: GlobalData
   ) {
     this.headers = new Headers({'Content-Type': 'application/json'});
   }
@@ -38,7 +40,7 @@ export class UserData {
   };
 
   login(username: string, password: string): any {
-    return this.http.post('http://localhost:8080/api/login', JSON.stringify({user: username, password: password}), { headers: this.headers })
+    return this.http.post(`${this.global.getApiBaseUrl()}/login`, JSON.stringify({user: username, password: password}), { headers: this.headers })
         .map(this.processLoginResponse, this);
   };
   
@@ -57,7 +59,7 @@ export class UserData {
     this.setUsername(username);
     this.events.publish('user:signup');*/
     
-    return this.http.post('http://localhost:8080/api/signup', JSON.stringify({user: data.email, password: data.password, name: data.name}), { headers: this.headers })
+    return this.http.post(`${this.global.getApiBaseUrl()}/signup`, JSON.stringify({user: data.email, password: data.password, name: data.name}), { headers: this.headers })
         .map(this.processLoginResponse, this);    
   };
 

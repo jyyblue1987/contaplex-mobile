@@ -9,65 +9,67 @@
 
 <ion-content class="login-page">
 
-	<div class="logo">
-		<img src="assets/img/appicon.svg" alt="Ionic Logo">
+	<div padding class="about-info">
+	  <p text-wrap>
+	      A continuación podés ingresar la información para solicitar acceso a ver los movimientos de tu cuenta en la empresa que indiques.
+	  </p>
 	</div>
 
 	<form #signupForm="ngForm" novalidate>
 		<ion-list no-lines>
+		
 			<ion-item>
-				<ion-label stacked color="primary">Nombre</ion-label>
-				<ion-input [(ngModel)]="signup.name" name="text" type="name" #name="ngModel" required>
+				<ion-label stacked color="primary">Nombre y Apellido</ion-label>
+				<ion-input [(ngModel)]="agregarCuenta.nombre" name="nombre" type="text" #nombre="ngModel" required>
 				</ion-input>
 			</ion-item>
 
-			<p ion-text [hidden]="name.valid || submitted == false" color="danger" padding-left>
-				Por favor, ingrese su nombre
+			<p ion-text [hidden]="nombre.valid || submitted == false" color="danger" padding-left>
+				Por favor, ingrese su nombre completo
 			</p>
 
 			<ion-item>
-				<ion-label stacked color="primary">E-mail</ion-label>
-				<ion-input [(ngModel)]="signup.email" name="email" type="email" #email="ngModel" required>
+				<ion-label stacked color="primary">Razón Social (opcional)</ion-label>
+				<ion-input [(ngModel)]="agregarCuenta.razon_social" name="razon_social" type="text" #razon_social="ngModel">
 				</ion-input>
 			</ion-item>
 
-			<p ion-text [hidden]="email.valid || submitted == false" color="danger" padding-left>
-				Por favor, ingrese su E-mail
-			</p>
-
 			<ion-item>
-				<ion-label stacked color="primary">Confirmar E-Mail</ion-label>
-				<ion-input [(ngModel)]="signup.email2" name="email2" type="email" #email2="ngModel" required>
+				<ion-label stacked color="primary">CUIT o DNI</ion-label>
+				<ion-input [(ngModel)]="agregarCuenta.documento" name="documento" type="text" #documento="ngModel" required>
 				</ion-input>
 			</ion-item>
 
-			<p ion-text [hidden]="email2.valid || submitted == false" color="danger" padding-left>
-				Por favor, confirme su E-mail
+			<p ion-text [hidden]="documento.valid || submitted == false" color="danger" padding-left>
+				Por favor, ingrese su CUIT o su DNI
 			</p>
 
 			<ion-item>
-				<ion-label stacked color="primary">Contraseña</ion-label>
-				<ion-input [(ngModel)]="signup.password" name="password" type="password" #password="ngModel" required>
-				</ion-input>
-			</ion-item>
-			<p ion-text [hidden]="password.valid || submitted == false" color="danger" padding-left>
-				Por favor, ingrese una contraseña
-			</p>
-
-			<ion-item>
-				<ion-label stacked color="primary">Confirmar Contraseña</ion-label>
-				<ion-input [(ngModel)]="signup.password2" name="password2" type="password" #password2="ngModel" required>
-				</ion-input>
+			    <ion-label stacked color="primary">Empresa</ion-label>
+			    <ion-select [(ngModel)]="agregarCuenta.empresa" name="empresa" #empresa="ngModel" okText="SELECCIONAR" cancelText="CERRAR" required>
+			      <ion-option value="1">OCA</ion-option>
+			      <ion-option value="2">Coca Cola</ion-option>
+			      <ion-option value="3">Toyota</ion-option>
+			      <ion-option value="4">Ford</ion-option>
+			      <ion-option value="5">Sheraton Argentina</ion-option>
+			      <ion-option value="6">Cablevision S.A.</ion-option>
+			    </ion-select>
 			</ion-item>
 			
-			<p ion-text [hidden]="password2.valid || submitted == false" color="danger" padding-left>
-				Por favor, confirme la contraseña
+			<p ion-text [hidden]="empresa.valid || submitted == false" color="danger" padding-left>
+				Por favor, seleccione la empresa en la cual tiene su cuenta
 			</p>
+
+			<ion-item>
+				<ion-label stacked color="primary">Mensaje (opcional)</ion-label>
+				<ion-textarea [(ngModel)]="agregarCuenta.mensaje" rows="1" name="mensaje" #mensaje="ngModel">
+				</ion-textarea>
+			</ion-item>
 
 		</ion-list>
 
 		<div padding>
-			<button ion-button (click)="onSignup(signupForm)" type="submit" block>Agregar</button>
+			<button ion-button (click)="onSolicitar(signupForm)" type="submit" block>Enviar solicitud</button>
 		</div>
 	</form>
 

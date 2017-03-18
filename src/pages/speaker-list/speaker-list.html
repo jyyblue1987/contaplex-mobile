@@ -21,17 +21,39 @@
  
   </ion-list>
   
-  <div [hidden]="!hasLoaded || cuentas.length > 0">
+  <ion-fab bottom right #fab [hidden]="cuentas.length === 0">
+    <button ion-fab mini color="primary" (click)="goToAgregarCuenta()"><ion-icon name="add"></ion-icon></button>
+    <!--
+    <ion-fab-list side="top">
+      <button ion-fab color="vimeo" (click)="goToAgregarCuenta()"><ion-icon name="logo-vimeo"></ion-icon></button>
+      <button ion-fab color="google" (click)="goToAgregarCuenta()"><ion-icon name="logo-googleplus"></ion-icon></button>
+      <button ion-fab color="twitter" (click)="goToAgregarCuenta()"><ion-icon name="logo-twitter"></ion-icon></button>
+      <button ion-fab color="facebook" (click)="goToAgregarCuenta()"><ion-icon name="logo-facebook"></ion-icon></button>
+    </ion-fab-list>
+    -->
+  </ion-fab>
+
+  <ion-card [hidden]="!hasLoaded || cuentas.length > 0">
     
-    <p>No hay cuentas</p>
+    <ion-card-header text-wrap>
+      <h1>Información sobre tus cuentas</h1>
+    </ion-card-header>
     
-    <div style="padding-left: 5px; padding-right: 5px;">
-	<button ion-button icon-left full (click)="goToAgregarCuenta()">
-	  <ion-icon name="sync"></ion-icon>
-	  Agregar Cuenta
-	</button>
-    </div>
+    <ion-card-content>
     
-  </div>
+      <h2 color="dark" text-wrap>
+	No exiten cuentas corrientes vinculadas con tu usuario. Si querés solicitar acceso a una nueva cuenta, por favor, presioná el siguiente botón:
+	<br/>
+	<br/>
+      </h2>
+
+      <button color="primary" ion-button icon-left full (click)="goToAgregarCuenta()">
+	<ion-icon name="sync"></ion-icon>
+	Agregar Cuenta
+      </button>
+
+    </ion-card-content>
+    
+  </ion-card>
 
 </ion-content>
