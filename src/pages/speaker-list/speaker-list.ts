@@ -50,6 +50,15 @@ export class SpeakerListPage {
     });
   }
 
+  buscar() {
+    this.user.getUsuarioId().then((usuarioId) => {
+	this.cuentasData.getMisCuentas(usuarioId).subscribe((cuentas: any[]) => {
+	    this.cuentas = cuentas;
+	    this.hasLoaded = true;
+	});
+    });
+  }
+  
   goToSchedule(cuenta: any) {
     this.navCtrl.push(SchedulePage, cuenta);
   }

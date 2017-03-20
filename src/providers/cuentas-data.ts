@@ -19,8 +19,8 @@ export class CuentaData {
 
   constructor(public http: Http, public user: UserData, private global: GlobalData) { }
   
-  loadMiEmpresa(usuarioId: string, queryText = ''): any {
-    return this.load(usuarioId, queryText);
+  loadMiEmpresa(usuarioId: string, queryText = '', reload: boolean = false): any {
+    return reload ? this.getMiEmpresa(usuarioId, queryText) : this.load(usuarioId, queryText);
   }
   
   load(usuarioId: string, dataType = "mis-cuentas"): any {

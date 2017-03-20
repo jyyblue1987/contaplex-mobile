@@ -15,6 +15,9 @@
 -->
     <ion-title>{{ cuenta.empresa }} {{ cuenta.nrocuenta }}</ion-title>
     <ion-buttons end>
+      <button ion-button icon-only (click)="updateSchedule()">
+        <ion-icon name="refresh"></ion-icon>
+      </button>
       <button ion-button icon-only (click)="presentFilter(criterio)">
         <ion-icon ios="ios-options-outline" md="md-options"></ion-icon>
       </button>
