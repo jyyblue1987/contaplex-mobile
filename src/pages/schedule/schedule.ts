@@ -33,6 +33,7 @@ export class SchedulePage {
   movimientosFiltrados: any = [];
   criterio: string = 'recientes';
   isLoading = false;
+  loading: any;
 
   constructor(
     public alertCtrl: AlertController,
@@ -54,12 +55,14 @@ export class SchedulePage {
   }
 
   updateSchedule() {
-    this.isLoading = true;  
+    this.isLoading = true;
+    this.presentLoadingDefault();
     this.movimientoData.load(this.cuenta.cuentaId, this.criterio).subscribe((movimientos: any[]) => {
       this.movimientos = movimientos;
       this.queryText = '';
       this.localFilter();
       this.isLoading = false;
+      this.loading.dismiss();
     });
   }
 
@@ -76,6 +79,13 @@ export class SchedulePage {
 
   }
 
+  presentLoadingDefault() {
+    this.loading = this.loadingCtrl.create({
+      content: 'Espere por favor...'
+    });
+    this.loading.present();
+  }
+    
   localFilter() {
     if (this.queryText) {
       this.movimientosFiltrados = this.filterItems(this.queryText);

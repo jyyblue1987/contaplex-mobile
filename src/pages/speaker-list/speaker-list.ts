@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { ActionSheet, ActionSheetController, Config, NavController } from 'ionic-angular';
+import { ActionSheet, ActionSheetController, Config, NavController, LoadingController } from 'ionic-angular';
 import { InAppBrowser } from 'ionic-native';
 
 import { ConferenceData } from '../../providers/conference-data';
@@ -21,10 +21,12 @@ export class SpeakerListPage {
   speakers: any[] = [];
   cuentas: any[] = [];
   hasLoaded: boolean = false;
+  loading: any;
 
   constructor(
     public actionSheetCtrl: ActionSheetController,
     public navCtrl: NavController,
+    public loadingCtrl: LoadingController,
     public confData: ConferenceData,
     public cuentasData: CuentaData,
     public user: UserData,
@@ -40,9 +42,11 @@ export class SpeakerListPage {
       if (hasLoggedIn) {
       
 	this.user.getUsuarioId().then((usuarioId) => {
+	    this.presentLoadingDefault();
 	    this.cuentasData.load(usuarioId).subscribe((cuentas: any[]) => {
 	      this.cuentas = cuentas;
 	      this.hasLoaded = true;
+	      this.loading.dismiss();
 	    });
 	});
 
@@ -50,11 +54,20 @@ export class SpeakerListPage {
     });
   }
 
+  presentLoadingDefault() {
+    this.loading = this.loadingCtrl.create({
+      content: 'Espere por favor...'
+    });
+    this.loading.present();
+  }
+
   buscar() {
     this.user.getUsuarioId().then((usuarioId) => {
+	this.presentLoadingDefault();
 	this.cuentasData.getMisCuentas(usuarioId).subscribe((cuentas: any[]) => {
 	    this.cuentas = cuentas;
 	    this.hasLoaded = true;
+	    this.loading.dismiss();
 	});
     });
   }
@@ -72,7 +85,7 @@ export class SpeakerListPage {
   }
 
   goToAgregarCuenta() {
-    this.navCtrl.push(AgregarCuentaPage);
+    this.navCtrl.parent.parent.setRoot(AgregarCuentaPage);
   }
 
   goToSpeakerTwitter(speaker: any) {

@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 
-import { ActionSheet, ActionSheetController, Config, NavController } from 'ionic-angular';
+import { ActionSheet, ActionSheetController, Config, NavController, LoadingController, Searchbar } from 'ionic-angular';
 import { InAppBrowser } from 'ionic-native';
 
 import { ConferenceData } from '../../providers/conference-data';
@@ -16,14 +16,19 @@ import { SchedulePage } from '../schedule/schedule';
   templateUrl: 'cuenta-empresa.html'
 })
 export class CuentaEmpresaPage {
+  @ViewChild('searchbar') searchbar:Searchbar;
   actionSheet: ActionSheet;
   speakers: any[] = [];
   cuentas: any[] = [];
   queryText = '';
+  hasLoaded: boolean = false;
+  loading: any;
+  showLoading: boolean = false;
   
   constructor(
     public actionSheetCtrl: ActionSheetController,
     public navCtrl: NavController,
+    public loadingCtrl: LoadingController,
     public confData: ConferenceData,
     public cuentasData: CuentaData,
     public user: UserData,
@@ -37,25 +42,34 @@ export class CuentaEmpresaPage {
     
    this.user.hasLoggedIn().then((hasLoggedIn) => {
       if (hasLoggedIn) {
-      
-	this.user.getUsuarioId().then((usuarioId) => {
-	    this.cuentasData.loadMiEmpresa(usuarioId).subscribe((cuentas: any[]) => {
-	      this.cuentas = cuentas;
-	    });
-	});
-
+        this.reload(true);
       }
     });
   }
 
-  buscar() {
+  presentLoadingDefault() {
+    this.loading = this.loadingCtrl.create({
+      content: 'Espere por favor...'
+    });
+    this.loading.present();
+  }
+  
+  reload(showLoading: boolean = false) {
+    this.showLoading = showLoading;
     this.user.getUsuarioId().then((usuarioId) => {
-	this.cuentasData.loadMiEmpresa(usuarioId, this.queryText).subscribe((cuentas: any[]) => {
+      if (this.showLoading) {
+	this.presentLoadingDefault();
+      }
+      this.cuentasData.loadMiEmpresa(usuarioId, this.queryText).subscribe((cuentas: any[]) => {
 	  this.cuentas = cuentas;
+	  if (this.showLoading) {
+	    this.loading.dismiss();
+	  }
+	  this.hasLoaded = true;
 	});
     });
   }
-    
+
   goToSchedule(cuenta: any) {
     this.navCtrl.push(SchedulePage, cuenta);
   }
