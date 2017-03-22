@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 
-import { ActionSheet, ActionSheetController, Config, NavController } from 'ionic-angular';
+import { ActionSheet, ActionSheetController, Config, NavController, LoadingController, Searchbar } from 'ionic-angular';
 import { InAppBrowser } from 'ionic-native';
 
 import { ConferenceData } from '../../providers/conference-data';
@@ -16,14 +16,18 @@ import { SchedulePage } from '../schedule/schedule';
   templateUrl: 'cuenta-empresa.html'
 })
 export class CuentaEmpresaPage {
+  @ViewChild('searchbar') searchbar:Searchbar;
   actionSheet: ActionSheet;
   speakers: any[] = [];
   cuentas: any[] = [];
   queryText = '';
+  hasLoaded: boolean = false;
+  loading: any;
   
   constructor(
     public actionSheetCtrl: ActionSheetController,
     public navCtrl: NavController,
+    public loadingCtrl: LoadingController,
     public confData: ConferenceData,
     public cuentasData: CuentaData,
     public user: UserData,
@@ -39,8 +43,11 @@ export class CuentaEmpresaPage {
       if (hasLoggedIn) {
       
 	this.user.getUsuarioId().then((usuarioId) => {
+	    this.presentLoadingDefault();
 	    this.cuentasData.loadMiEmpresa(usuarioId).subscribe((cuentas: any[]) => {
 	      this.cuentas = cuentas;
+	      this.loading.dismiss();
+	      this.hasLoaded = true;
 	    });
 	});
 
@@ -48,10 +55,23 @@ export class CuentaEmpresaPage {
     });
   }
 
+  presentLoadingDefault() {
+    this.loading = this.loadingCtrl.create({
+      content: 'Espere por favor...'
+    });
+    this.loading.onDidDismiss(() => {
+      //this.searchbar.setFocus();
+    });    
+    this.loading.present();
+  }
+  
   buscar() {
     this.user.getUsuarioId().then((usuarioId) => {
+	//this.presentLoadingDefault();
 	this.cuentasData.loadMiEmpresa(usuarioId, this.queryText).subscribe((cuentas: any[]) => {
 	  this.cuentas = cuentas;
+	  //this.loading.dismiss();
+	  this.hasLoaded = true;
 	});
     });
   }

@@ -17,7 +17,7 @@
     <ion-searchbar color="primary"
                    [(ngModel)]="queryText"
                    (ionInput)="buscar()"
-                   placeholder="Buscar cuentas">
+                   #searchbar placeholder="Buscar cuentas">
     </ion-searchbar>
   </ion-toolbar>
   
@@ -26,7 +26,7 @@
 <ion-content class="outer-content speaker-list">
   
  
-  <ion-list>
+  <ion-list [hidden]="cuentas.length === 0">
 
     <button *ngFor="let cuenta of cuentas" ion-item (click)="goToSchedule(cuenta)">
       <ion-icon [color]="cuenta.saldo < 0 ? 'danger' : 'primary'" name="sync" item-left></ion-icon>
@@ -37,4 +37,12 @@
  
   </ion-list>
 
+  <ion-card [hidden]="!hasLoaded || cuentas.length > 0">
+    
+    <ion-card-header text-wrap>
+      <h2>No existen cuentas para tu empresa</h2>
+    </ion-card-header>
+    
+  </ion-card>
+  
 </ion-content>

@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 
 import { Events, MenuController, Nav, Platform } from 'ionic-angular';
-import { Splashscreen } from 'ionic-native';
+import { Splashscreen, StatusBar } from 'ionic-native';
 import { Storage } from '@ionic/storage';
 
 import { AboutPage } from '../pages/about/about';
@@ -42,7 +42,7 @@ export class ConferenceApp {
   // the login page disables the left menu
   appPages: PageInterface[] = [
     { title: 'Mis Cuentas', component: TabsPage, tabComponent: SpeakerListPage, icon: 'sync' },
-    { title: 'Mi Empresa', component: TabsPage, tabComponent: CuentaEmpresaPage, icon: 'contacts' }
+    { title: 'Mi Empresa', component: TabsPage, tabComponent: CuentaEmpresaPage, index: 1, icon: 'contacts' }
   ];
   loggedInPages: PageInterface[] = [
     { title: 'Perfil', component: AccountPage, icon: 'person' },
@@ -138,9 +138,7 @@ export class ConferenceApp {
   }
 
   platformReady() {
-    if (cordova.platformId == 'android') {
-      StatusBar.backgroundColorByHexString("#fff");
-    }
+    StatusBar.backgroundColorByHexString('#729fc8'); // TODO: on android go to 000 or darker blue. Everything else set this color
     // Call any initial plugins when ready
     this.platform.ready().then(() => {
       Splashscreen.hide();
