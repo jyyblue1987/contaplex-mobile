@@ -23,6 +23,7 @@ export class CuentaEmpresaPage {
   queryText = '';
   hasLoaded: boolean = false;
   loading: any;
+  showLoading: boolean = false;
   
   constructor(
     public actionSheetCtrl: ActionSheetController,
@@ -41,16 +42,7 @@ export class CuentaEmpresaPage {
     
    this.user.hasLoggedIn().then((hasLoggedIn) => {
       if (hasLoggedIn) {
-      
-	this.user.getUsuarioId().then((usuarioId) => {
-	    this.presentLoadingDefault();
-	    this.cuentasData.loadMiEmpresa(usuarioId).subscribe((cuentas: any[]) => {
-	      this.cuentas = cuentas;
-	      this.loading.dismiss();
-	      this.hasLoaded = true;
-	    });
-	});
-
+        this.reload(true);
       }
     });
   }
@@ -59,23 +51,25 @@ export class CuentaEmpresaPage {
     this.loading = this.loadingCtrl.create({
       content: 'Espere por favor...'
     });
-    this.loading.onDidDismiss(() => {
-      //this.searchbar.setFocus();
-    });    
     this.loading.present();
   }
   
-  buscar() {
+  reload(showLoading: boolean = false) {
+    this.showLoading = showLoading;
     this.user.getUsuarioId().then((usuarioId) => {
-	//this.presentLoadingDefault();
-	this.cuentasData.loadMiEmpresa(usuarioId, this.queryText).subscribe((cuentas: any[]) => {
+      if (this.showLoading) {
+	this.presentLoadingDefault();
+      }
+      this.cuentasData.loadMiEmpresa(usuarioId, this.queryText).subscribe((cuentas: any[]) => {
 	  this.cuentas = cuentas;
-	  //this.loading.dismiss();
+	  if (this.showLoading) {
+	    this.loading.dismiss();
+	  }
 	  this.hasLoaded = true;
 	});
     });
   }
-    
+
   goToSchedule(cuenta: any) {
     this.navCtrl.push(SchedulePage, cuenta);
   }
