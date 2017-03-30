@@ -44,7 +44,7 @@ def notifyBuild(String buildStatus = 'STARTED') {
   } else if (buildStatus == 'SUCCESSFUL') {
     color = 'GREEN'
     colorCode = '#00FF00'
-    summary= "${env.JOB_NAME} - New build available at http://babbage.blitzit.com.ar/jenkins-builds/contaplex-mobile/builds/${env.BRANCH_NAME}/${env.BUILD_NUMBER}/android-debug.apk"
+    summary= "${env.JOB_NAME} - New build available at http://babbage.blitzit.com.ar/jenkins-builds/contaplex-mobile/builds/${env.BRANCH_NAME}/${env.BUILD_NUMBER}/android-armv7-debug.apk"
   } else {
     color = 'RED'
     colorCode = '#FF0000'
