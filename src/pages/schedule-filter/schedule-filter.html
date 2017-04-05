@@ -44,7 +44,12 @@
     <ion-item>
       <ion-label>Ir a fecha...</ion-label>
       <ion-radio name="criterioMovimientos" value="fecha" *ngIf="criterioMovimientos == 'fecha'"></ion-radio>
-      <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="selectedDate" (ionChange)="onSelectDate()" (ionCancel)="onCancelDate()"></ion-datetime>
+      <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="selectedDate" 
+        (ionChange)="onSelectDate()" (ionCancel)="onCancelDate()"
+        doneText="SELECCIONAR" cancelText="CANCELAR" 
+        >
+          
+      </ion-datetime>
     </ion-item>
   </ion-list>
   
