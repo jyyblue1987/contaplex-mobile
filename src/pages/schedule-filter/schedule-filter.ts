@@ -12,6 +12,7 @@ import { ConferenceData } from '../../providers/conference-data';
 export class ScheduleFilterPage {
   tracks: Array<{name: string, isChecked: boolean}> = [];
   criterioMovimientos: string;
+  selectedDate: any;
   
   constructor(
     public confData: ConferenceData,
@@ -25,7 +26,22 @@ export class ScheduleFilterPage {
   }
 
   applyFilters() {
-    this.dismiss(this.criterioMovimientos);
+    var value = this.criterioMovimientos;
+    if( this.criterioMovimientos == 'fecha' )
+      value += '-' + this.selectedDate;
+    this.dismiss(value);
+  }
+
+  onChangedRadio() {
+
+  }
+
+  onSelectDate() {
+    this.criterioMovimientos = 'fecha';
+  }
+
+  onCancelDate() {
+    this.criterioMovimientos = 'recientes';
   }
 
   dismiss(data?: any) {
